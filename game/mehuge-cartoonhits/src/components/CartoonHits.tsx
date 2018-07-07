@@ -24,10 +24,10 @@ const Thing = styled('div')`
   &.bam { color: yellow; }
   &.pow { color: orange; }
   &.ka-pow { color: gold; }
-  &.whap { color: salmon; }
+  &.whap { color: crimson; }
   &.bang { color: lime; }
   &.wham { color: pink; }
-  &.wack { color: #99FF00; }
+  &.whak { color: aqua; }
 `;
 
 interface Health {
@@ -124,7 +124,7 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
     { x: 10, y: 50 },
     { x: 50, y: 10 },
     { x: 50, y: 50 },
-    { x: 35, y: 35 },       // the 5th quadrant!
+    { x: 30, y: 30 },       // the 5th quadrant!
   ];
 
   private getOffset = (): Offset => {
