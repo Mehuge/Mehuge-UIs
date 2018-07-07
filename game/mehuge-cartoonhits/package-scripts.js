@@ -62,7 +62,7 @@ module.exports = {
     watch: {
       // Run the watchers, and the webserver concurrently
       script: npsUtils.concurrent.nps(
-        'watch.ts', 'watch.scss', 'watch.images', 'watch.other',
+        'watch.ts', 'watch.scss', 'watch.images', 'watch.media', 'watch.other',
         'watch.livereload', 'watch.browser'),
 
       // Watchers
