@@ -1,0 +1,7 @@
+{
+  "name": "mehuge-graph",
+  "mainFile": "index.html",
+  "layer": 4,
+  "handlesCharacter": true,
+  "handlesCombatLog": true
+}
