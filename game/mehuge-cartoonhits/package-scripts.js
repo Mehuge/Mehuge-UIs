@@ -81,7 +81,7 @@ module.exports = {
       hatchery: {
         script: 'nps install.hatchery.clean install.hatchery.copy',
         clean: 'rimraf \"%localappdata%/CSE/CamelotUnchained/4/INTERFACE/hud\"',
-        copy: 'copyup dist/**/* \"%localappdata%/CSE/CamelotUnchained/4/INTERFACE/mehuge-graph\"',
+        copy: 'copyup dist/**/* \"%localappdata%/CSE/CamelotUnchained/4/INTERFACE/mehuge-cartoonhits\"',
       }
     }
   }
