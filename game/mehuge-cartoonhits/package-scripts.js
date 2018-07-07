@@ -40,10 +40,11 @@ module.exports = {
 
     // Copy resources to dist
     copy: {
-      script: 'nps copy.css copy.others copy.images',
+      script: 'nps copy.css copy.others copy.images copy.media',
       others: 'copyup src/*.html src/*.ui dist',
       css: 'copyup build/css/**/* dist',
-      images: 'copyup build/images/**/* dist',
+      images: 'copyup src/images/**/* dist',
+      media: 'copyup src/media/**/* dist',
     },
 
     // Post build clean up intermediate folders
@@ -60,6 +61,7 @@ module.exports = {
       ts: 'watch -p "src/**/*.ts" -p "src/**/*.tsx" -c "nps update.ts"',
       scss: 'watch -p "src/**/*.scss" -c "nps update.scss"',
       images: 'watch -p "src/images/**/*" -c "nps copy.images"',
+      media: 'watch -p "src/media/**/*" -c "nps copy.media"',
       other: 'watch -p "src/*.html" -p "src/*.ui" -c "nps copy.others"',
 
       // Browser and reloader

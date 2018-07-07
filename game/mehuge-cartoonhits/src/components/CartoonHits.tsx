@@ -27,6 +27,7 @@ const Thing = styled('div')`
   &.whap { color: salmon; }
   &.bang { color: lime; }
   &.wham { color: pink; }
+  &.wack { color: #99FF00; }
 `;
 
 interface Health {
@@ -50,12 +51,18 @@ interface Sprite {
   timer?: any;
 }
 
+interface Sound {
+  id: number;
+  name: string;
+}
+
 interface CartoonHitsProps {
   health: Health[];
 }
 
 interface CartoonHitsState {
   sprites: Sprite[];
+  sounds: Sound[];
 }
 
 export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHitsState> {
@@ -64,7 +71,7 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
   private sequence: number[] = [];
   constructor(props: CartoonHitsProps) {
     super(props);
-    this.state = { sprites: [] };
+    this.state = { sprites: [], sounds: [] };
   }
   public componentDidMount() {
     this.calc(this.props, this.props);
@@ -86,8 +93,21 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
               }}
               className={sprite.name}>{sprite.text}</Thing>
         )}
+        { this.state.sounds.map(sound =>
+          <audio key={sound.id}
+            autoPlay
+            onPlay={(e: React.UIEvent<HTMLAudioElement>) => e.currentTarget.volume = 0.1}
+            onEnded={() => this.soundFinished(sound.id)}
+            src={`media/${sound.name}`}
+            />
+        )}
       </Frame>
     );
+  }
+
+  private soundFinished = (id: number) => {
+    const sounds = this.state.sounds.filter(sound => sound.id != id);
+    this.setState({ sounds });
   }
 
   // This logic randomly picks an xy position but not in the same
@@ -129,8 +149,10 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
   private calc = (prevProps: CartoonHitsProps, props: CartoonHitsProps) => {
     const prev = prevProps.health;
     const curr = props.health;
+    const wounds = curr.map((health, i) => health.wounds - prev[i].wounds);
     const diffs = curr.map((health, i) => health.current - prev[i].current);
     const diff = diffs.reduce((p, c) => p + c);
+    const wounded = wounds.reduce((p, c) => p + c);
     const now = Date.now();
     const expires = now + 2000;
     let sprite: Sprite;
@@ -144,7 +166,7 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
       rotate = ((Math.random() * 120) - 60) | 0;
 
       // Decide which word to show, we will sequence through them randomly
-      if (!this.sequence.length) this.sequence = [ 0, 1, 2, 3, 4, 5, 6 ];
+      if (!this.sequence.length) this.sequence = [ 0, 1, 2, 3, 4, 5, 6, 7 ];
       const i = (Math.random() * this.sequence.length)| 0;
       const word = this.sequence[i];
       this.sequence = this.sequence.filter(n => n != word);
@@ -158,6 +180,7 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
         case 4: name = 'whap'; text = 'WHAP!'; break;
         case 5: name = 'bang'; text = 'BANG!'; break;
         case 6: name = 'wham'; text = 'WHAM!'; break;
+        case 7: name = 'whak'; text = 'WHAK!'; break;
       }
     }
     if (name) {
@@ -165,6 +188,11 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
       sprite.timer = setTimeout(this.expires, 2000);
       const sprites = [...this.state.sprites, sprite];
       this.setState({ sprites });
+    }
+
+    if (wounded > 0) {
+      const sound: Sound = { id, name: 'WilhelmScream.ogg' };
+      this.setState({ sounds: [...this.state.sounds, sound ] });
     }
   }
 
