@@ -1,24 +1,11 @@
-Prerequisits
+Cartoon Hits
 --
-Install nodejs (which includes npm) from https://nodejs.org/en/download/
+Cartoon Hits is a silly mod for Camelot Unchained that displays cartoon style hits when you take
+damage above a certain threshold.
 
 Installation
 --
-This will clone the project, install dependencies and build the sample Hello World UI.
 
-    git clone https://github.com/mehuge/cu-ui-starter-project
-    cd cu-ui-starter-project
-    npm run setup
+For installation insturctions and further details please visit the Camelot Unchained forums
 
-Building
---
-    npm start build
-
-Testing in Browser
---
-    npm start dev
-
-Output
---
-
-The output from a build is the `dist` folder.  This contains your ready to install UI.
+https://forums.camelotunchained.com/topic/793-mehuges-crazy-ui-thread/?tab=comments#comment-15193
