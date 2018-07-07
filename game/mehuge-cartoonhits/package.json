@@ -60,6 +60,7 @@
     "nps-utils": "^1.6.0",
     "rimraf": "^2.6.1",
     "sass-importer-node": "^1.0.1",
+    "tinyify": "^2.4.3",
     "tslint": "^5.4.3",
     "tslint-config-airbnb": "^5.3.0",
     "tslint-eslint-rules": "^4.0.0",
