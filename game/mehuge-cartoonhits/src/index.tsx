@@ -19,11 +19,19 @@ import { CartoonHits } from 'components/CartoonHits';
 
 const root = document.getElementById('ui');
 
+const isClient = window['cuOverrides'] === undefined;
+
 client.OnInitialized(() => {
   ReactDom.render(
     <ErrorBoundary outputErrorToConsole>
       <Watch player={true}>{(data: WatchData) => {
-        return data.player && <CartoonHits health={data.player.health}/>;
+        return data.player && (
+          <CartoonHits
+            animate={!isClient}                   // animation is broken in client
+            duration={data.player['duration']}    // for testing
+            health={data.player.health}
+          />
+        );
       }}</Watch>
     </ErrorBoundary>,
     root);
