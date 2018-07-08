@@ -5,6 +5,8 @@
  */
 
 const npsUtils = require('nps-utils');
+
+const UI_NAME = 'mehuge-cartoonhits';
 const requires = [ 'react', 'react-dom', 'es6-promise' ];
 const transpiled = 'build/transpiled/index.js';
 const output = 'dist/js/index.js';
@@ -49,7 +51,7 @@ module.exports = {
     // Copy resources to dist
     copy: {
       script: 'nps copy.css copy.others copy.images copy.media',
-      others: 'copyup src/*.html src/*.ui dist',
+      others: 'copyup src/*.html src/*.ui src/*.js third-party/**/* dist',
       css: 'copyup build/css/**/* dist',
       images: 'copyup src/images/**/* dist',
       media: 'copyup src/media/**/* dist',
@@ -88,11 +90,22 @@ module.exports = {
 
     // installers
     install: {
-      hatchery: {
-        script: 'nps install.hatchery.clean install.hatchery.copy',
-        clean: 'rimraf \"%localappdata%/CSE/CamelotUnchained/4/INTERFACE/hud\"',
-        copy: 'copyup dist/**/* \"%localappdata%/CSE/CamelotUnchained/4/INTERFACE/mehuge-cartoonhits\"',
-      }
+      hatchery: installServer('hatchery', 4),
     }
+  }
+}
+
+// Functions that generate build configs
+
+function INTERFACE(n) {
+  return `%localappdata%/CSE/CamelotUnchained/${n}/INTERFACE`;
+}
+
+function installServer(name, n) {
+  return {
+    script: `nps install.${name}.clean install.${name}.copy install.${name}.nodev`,
+    clean: `rimraf \"${INTERFACE(n)}/${UI_NAME}"`,
+    copy: `copyup dist/**/* \"${INTERFACE(n)}/${UI_NAME}"`,
+    nodev: `rimraf \"${INTERFACE(n)}/${UI_NAME}/dev.config.js"`,
   }
 }
