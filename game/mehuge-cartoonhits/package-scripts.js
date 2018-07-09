@@ -5,6 +5,7 @@
  */
 
 const npsUtils = require('nps-utils');
+const package = require('./package.json');
 
 const UI_NAME = 'mehuge-cartoonhits';
 const requires = [ 'react', 'react-dom', 'es6-promise' ];
@@ -91,6 +92,11 @@ module.exports = {
     // installers
     install: {
       hatchery: installServer('hatchery', 4),
+    },
+
+    // publish
+    publish: {
+      script: 'rimraf dist/dev.config*.js && node package.js'
     }
   }
 }
@@ -104,8 +110,8 @@ function INTERFACE(n) {
 function installServer(name, n) {
   return {
     script: `nps install.${name}.clean install.${name}.copy install.${name}.nodev`,
-    clean: `rimraf \"${INTERFACE(n)}/${UI_NAME}"`,
-    copy: `copyup dist/**/* \"${INTERFACE(n)}/${UI_NAME}"`,
-    nodev: `rimraf \"${INTERFACE(n)}/${UI_NAME}/dev.config.js"`,
+    clean: `rimraf \"${INTERFACE(n)}/${package['ui-name']}"`,
+    copy: `copyup dist/**/* \"${INTERFACE(n)}/${package['ui-name']}"`,
+    nodev: `rimraf \"${INTERFACE(n)}/${package['ui-name']}/dev.config.js"`,
   }
 }
