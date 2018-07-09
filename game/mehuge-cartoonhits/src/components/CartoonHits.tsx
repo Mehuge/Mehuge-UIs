@@ -243,7 +243,7 @@ export class CartoonHits extends React.PureComponent<CartoonHitsProps, CartoonHi
     }
 
     if (wounded.length) {
-      sound = { id, name: 'WilhelmScream.ogg', volume: 0.1 };
+      sound = { id, name: 'WilhelmScream.ogg', volume: 0.5 };
     }
 
     // If we have a sound, add it to the sound q
